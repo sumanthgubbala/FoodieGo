@@ -1,6 +1,7 @@
 package com.sumanth.FoodieGo.Mapper;
 
 import com.sumanth.FoodieGo.Dto.UserDto;
+import com.sumanth.FoodieGo.Dto.UserProfile;
 import com.sumanth.FoodieGo.Entity.User;
 import org.springframework.stereotype.Component;
 
@@ -27,5 +28,18 @@ public class UserMapper {
         userDto.setPhoneNumber(user.getPhoneNumber());
         userDto.setRole(user.getRole());
         return userDto;
+    }
+
+    public UserProfile modelToProfile(User user){
+        UserProfile profile = new UserProfile();
+
+        profile.setId(user.getId());
+        profile.setName(user.getName());
+        profile.setAddress(user.getAddress());
+        profile.setRole(user.getRole());
+        profile.setEmail(user.getEmail());
+        profile.setPhoneNumber(user.getPhoneNumber());
+
+        return profile;
     }
 }

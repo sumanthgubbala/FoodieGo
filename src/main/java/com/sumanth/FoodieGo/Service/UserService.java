@@ -3,10 +3,14 @@ package com.sumanth.FoodieGo.Service;
 import com.sumanth.FoodieGo.Dto.LoginDto;
 import com.sumanth.FoodieGo.Entity.User;
 import com.sumanth.FoodieGo.Repository.UserRepository;
+import com.sumanth.FoodieGo.Security.UserPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService {
+public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
@@ -51,5 +55,17 @@ public class UserService {
             User user = this.getByUserId(userId);
             this.userRepository.delete(user);
             return "User Delete Successfully";
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User user = userRepository.findByName(username).orElse(null);
+
+        if(user == null){
+            System.out.println("User Not found");
+            throw new RuntimeException("User Not Found");
+        }
+
+        return new UserPrincipal(user);
     }
 }

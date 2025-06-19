@@ -2,6 +2,7 @@ package com.sumanth.FoodieGo.Controller;
 
 import com.sumanth.FoodieGo.Dto.LoginDto;
 import com.sumanth.FoodieGo.Dto.UserDto;
+import com.sumanth.FoodieGo.Dto.UserProfile;
 import com.sumanth.FoodieGo.Entity.User;
 import com.sumanth.FoodieGo.Mapper.UserMapper;
 import com.sumanth.FoodieGo.Service.UserService;
@@ -32,8 +33,8 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<?> getById(@PathVariable long userId){
         try{
-            UserDto userDto = this.userMapper.modelToDto(this.userService.getByUserId(userId));
-            return ResponseEntity.ok(userDto);
+            UserProfile profile = this.userMapper.modelToProfile(this.userService.getByUserId(userId));
+            return ResponseEntity.ok(profile);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

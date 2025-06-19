@@ -31,7 +31,7 @@ public class CategoryController {
         }
     }
 
-    @GetMapping("/all")
+    @GetMapping("/home")
     public ResponseEntity<?> allCategories(){
         return ResponseEntity.ok(this.categoryService.getAll());
     }

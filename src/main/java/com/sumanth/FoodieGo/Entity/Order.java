@@ -24,6 +24,9 @@ public class Order {
     private User user;
 
     @ManyToOne
+    private BatchOrder batchOrder;
+
+    @ManyToOne
     @JoinColumn(name = "restaurant_id",nullable = false)
     private Restaurant restaurant;
 

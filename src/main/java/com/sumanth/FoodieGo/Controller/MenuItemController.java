@@ -1,12 +1,16 @@
 package com.sumanth.FoodieGo.Controller;
 
 import com.sumanth.FoodieGo.Dto.MenuItemDto;
+import com.sumanth.FoodieGo.Dto.MenuItemsResponseDto;
 import com.sumanth.FoodieGo.Entity.MenuItem;
 import com.sumanth.FoodieGo.Mapper.MenuItemMapper;
+import com.sumanth.FoodieGo.Mapper.MenuItemsResponse;
 import com.sumanth.FoodieGo.Service.MenuItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -17,9 +21,12 @@ public class MenuItemController {
 
     private final MenuItemMapper menuItemMapper;
 
-    public MenuItemController(MenuItemService menuItemService, MenuItemMapper menuItemMapper) {
+    private final MenuItemsResponse menuItemsResponse;
+
+    public MenuItemController(MenuItemService menuItemService, MenuItemMapper menuItemMapper, MenuItemsResponse menuItemsResponse) {
         this.menuItemService = menuItemService;
         this.menuItemMapper = menuItemMapper;
+        this.menuItemsResponse = menuItemsResponse;
     }
 
     @PostMapping("/add")
@@ -43,7 +50,13 @@ public class MenuItemController {
 
     @GetMapping("/all")
     public ResponseEntity<?> getAll(){
-        return ResponseEntity.ok(this.menuItemService.getAllMenuItems());
+        List<MenuItemsResponseDto> responseDtos = new ArrayList<>();
+        List<MenuItem> items = this.menuItemService.getAllMenuItems();
+        for (MenuItem item : items){
+            MenuItemsResponseDto dto = this.menuItemsResponse.convertToMenuItemsResponse(item);
+            responseDtos.add(dto);
+        }
+        return ResponseEntity.ok(responseDtos);
     }
 
     @PutMapping("/update")
