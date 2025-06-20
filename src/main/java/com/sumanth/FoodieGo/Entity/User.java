@@ -20,6 +20,12 @@ public class User {
     @Column(name = "name",nullable = false)
     private String name;
 
+    @Column(name = "last_name")
+    private String lastName;
+
+    @Column(name = "user_name")
+    private String userName;
+
     @Column(name = "email",nullable = false,unique = true)
     private String email;
 
@@ -33,7 +39,7 @@ public class User {
     private String address;
 
     @Enumerated(EnumType.STRING)
-    @Column(name = "role",nullable = false)
+    @Column(name = "role",nullable = false,length = 20)
     private Role role = Role.CUSTOMER;
 
 }

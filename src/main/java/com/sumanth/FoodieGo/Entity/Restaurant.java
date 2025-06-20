@@ -30,6 +30,8 @@ public class Restaurant {
     @Column(name = "email",nullable = false)
     private String email;
 
+    private String imgUrl;
+
     @Column(name = "opening_time",nullable = false)
     private Time openingTime;
 

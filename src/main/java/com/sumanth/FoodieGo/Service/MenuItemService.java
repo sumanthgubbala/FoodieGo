@@ -46,4 +46,15 @@ public class MenuItemService {
         this.menuItemRepository.delete(menuItem);
         return "Deleted Successfully";
     }
+
+    public MenuItem updateImage(MenuItem menuItem){
+        MenuItem existing = getByMenuItemId(menuItem.getId());
+        existing.setImgUrl(menuItem.getImgUrl());
+        menuItemRepository.save(existing);
+        return existing;
+    }
+
+    public List<MenuItem> getByCategoryId(int categoryId){
+        return this.menuItemRepository.findByCategoryId(categoryId);
+    }
 }

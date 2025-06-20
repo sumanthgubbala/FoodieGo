@@ -59,6 +59,21 @@ public class MenuItemController {
         return ResponseEntity.ok(responseDtos);
     }
 
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<?> getByCategory(@PathVariable int categoryId){
+        try{
+            List<MenuItem> menuItems = this.menuItemService.getByCategoryId(categoryId);
+            List<MenuItemsResponseDto> responses = new ArrayList<>();
+            for(MenuItem item : menuItems){
+                MenuItemsResponseDto dto = this.menuItemsResponse.convertToMenuItemsResponse(item);
+                responses.add(dto);
+            }
+            return ResponseEntity.ok(responses);
+        }catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
+        }
+    }
+
     @PutMapping("/update")
     public ResponseEntity<?> update(@RequestBody MenuItemDto menuItemDto){
         try{
@@ -69,6 +84,17 @@ public class MenuItemController {
             return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
         }
     }
+
+    @PutMapping("/image")
+    public ResponseEntity<?> updateImg(@RequestBody MenuItem menuItem){
+        try{
+            return ResponseEntity.ok(this.menuItemService.updateImage(menuItem));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
+        }
+    }
+
+
 
     @DeleteMapping("/{menuItemId}")
     public ResponseEntity<?> delete(@PathVariable int menuItemId){

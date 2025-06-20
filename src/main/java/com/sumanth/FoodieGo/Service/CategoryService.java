@@ -35,6 +35,12 @@ public class CategoryService {
         return categoryRepository.save(existing);
     }
 
+    public  Category addImage(Category category){
+        Category existing = getByCategoryId(category.getId());
+        existing.setImgUrl(category.getImgUrl());
+        return categoryRepository.save(existing);
+    }
+
     public String delete(int categoryId){
         Category category = getByCategoryId(categoryId);
         this.categoryRepository.delete(category);

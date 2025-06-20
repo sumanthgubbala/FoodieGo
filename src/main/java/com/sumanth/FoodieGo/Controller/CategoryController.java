@@ -45,6 +45,15 @@ public class CategoryController {
         }
     }
 
+    @PutMapping("/image")
+    public ResponseEntity<?> addImg(@RequestBody Category category){
+        try{
+            return ResponseEntity.ok(this.categoryService.addImage(category));
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
+        }
+    }
+
     @DeleteMapping("/{categoryId}")
     public ResponseEntity<?> deleteById(@PathVariable int categoryId){
         try{

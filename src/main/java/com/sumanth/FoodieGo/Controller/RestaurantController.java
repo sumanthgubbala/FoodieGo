@@ -45,6 +45,15 @@ public class RestaurantController {
         }
     }
 
+    @PutMapping("/image")
+    public ResponseEntity<?> updateImage(@RequestBody Restaurant restaurant){
+        try{
+            return ResponseEntity.ok(this.restaurantService.updateImage(restaurant));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("Message",e.getMessage()));
+        }
+    }
+
     @DeleteMapping("/{restaurantId}")
     public ResponseEntity<?> delete(@PathVariable int restaurantId){
         try {

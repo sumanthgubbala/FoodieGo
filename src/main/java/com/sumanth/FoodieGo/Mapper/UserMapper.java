@@ -11,6 +11,8 @@ public class UserMapper {
     public User mapToModel(UserDto userDto){
         User user = new User();
         user.setName(userDto.getName());
+        user.setLastName(userDto.getLastName());
+        user.setUserName(userDto.getUserName());
         user.setEmail(userDto.getEmail());
         user.setAddress(userDto.getAddress());
         user.setPassword(userDto.getPassword());

@@ -39,7 +39,15 @@ public class RestaurantService {
         existing.setOpeningTime(restaurant.getOpeningTime());
         existing.setClosingTime(restaurant.getClosingTime());
         existing.setStatus(restaurant.getStatus());
+        existing.setImgUrl(restaurant.getImgUrl());
         return this.restaurantRepository.save(existing);
+    }
+
+    public Restaurant updateImage(Restaurant restaurant){
+        Restaurant existing = getByRestaurantId(restaurant.getId());
+        existing.setImgUrl(restaurant.getImgUrl());
+        restaurantRepository.save(existing);
+        return existing;
     }
 
     public String delete(int restaurantId){

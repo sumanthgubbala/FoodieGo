@@ -15,6 +15,12 @@ public class UserDto {
     @NotBlank(message = "Name cannot be null or empty")
     private String name;
 
+    private String lastName;
+
+    private String userName;
+
+
+
     @NotNull(message = "Email cannot be null")
     @Email(message = "Email should be valid")
     private String email;
