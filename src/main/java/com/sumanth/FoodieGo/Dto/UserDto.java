@@ -13,7 +13,7 @@ public class UserDto {
     private long id;
 
     @NotBlank(message = "Name cannot be null or empty")
-    private String name;
+    private String firstName;
 
     private String lastName;
 

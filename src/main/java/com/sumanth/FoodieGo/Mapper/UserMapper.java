@@ -10,7 +10,7 @@ public class UserMapper {
 
     public User mapToModel(UserDto userDto){
         User user = new User();
-        user.setName(userDto.getName());
+        user.setFirstName(userDto.getFirstName());
         user.setLastName(userDto.getLastName());
         user.setUserName(userDto.getUserName());
         user.setEmail(userDto.getEmail());
@@ -24,7 +24,7 @@ public class UserMapper {
     public UserDto modelToDto(User user){
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
-        userDto.setName(user.getName());
+        userDto.setFirstName(user.getFirstName());
         userDto.setAddress(user.getAddress());
         userDto.setEmail(user.getEmail());
         userDto.setPhoneNumber(user.getPhoneNumber());
@@ -36,7 +36,7 @@ public class UserMapper {
         UserProfile profile = new UserProfile();
 
         profile.setId(user.getId());
-        profile.setName(user.getName());
+        profile.setName(user.getFirstName());
         profile.setAddress(user.getAddress());
         profile.setRole(user.getRole());
         profile.setEmail(user.getEmail());

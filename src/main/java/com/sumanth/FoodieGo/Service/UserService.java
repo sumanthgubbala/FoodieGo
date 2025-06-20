@@ -31,7 +31,7 @@ public class UserService implements UserDetailsService {
     public User update(User user){
         User existing = this.getByUserId(user.getId());
         existing.setEmail(user.getEmail());
-        existing.setName(user.getName());
+        existing.setFirstName(user.getFirstName());
         existing.setAddress(user.getAddress());
         existing.setPassword(user.getPassword());
         existing.setPhoneNumber(user.getPhoneNumber());
@@ -42,7 +42,7 @@ public class UserService implements UserDetailsService {
 
 
     public User login(LoginDto loginDto){
-        User user = this.userRepository.findByName(loginDto.getName()).orElseThrow(
+        User user = this.userRepository.findByUserName(loginDto.getUserName()).orElseThrow(
                 () -> new RuntimeException("User not Found")
         );
         if(!user.getPassword().equals(loginDto.getPassword())){
@@ -59,7 +59,7 @@ public class UserService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepository.findByName(username).orElse(null);
+        User user = userRepository.findByUserName(username).orElse(null);
 
         if(user == null){
             System.out.println("User Not found");
