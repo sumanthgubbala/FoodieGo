@@ -8,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.GetMapping;
 
 @Service
 public class UserService implements UserDetailsService {
@@ -38,6 +39,11 @@ public class UserService implements UserDetailsService {
         existing.setRole(user.getRole());
 
         return this.userRepository.save(existing);
+    }
+
+    public User getByUserName(String userName){
+        User user = this.userRepository.findByUserName(userName).orElse(null);
+        return user;
     }
 
 

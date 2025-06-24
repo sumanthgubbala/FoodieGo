@@ -5,9 +5,11 @@ import com.sumanth.FoodieGo.Dto.UserDto;
 import com.sumanth.FoodieGo.Dto.UserProfile;
 import com.sumanth.FoodieGo.Entity.User;
 import com.sumanth.FoodieGo.Mapper.UserMapper;
+import com.sumanth.FoodieGo.Security.UserPrincipal;
 import com.sumanth.FoodieGo.Service.UserService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
@@ -22,6 +24,12 @@ public class UserController {
     public UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;
         this.userMapper = userMapper;
+    }
+
+    @GetMapping("/me")
+    public ResponseEntity<?> getCurrentUser(@AuthenticationPrincipal UserPrincipal userPrincipal){
+        UserProfile profile = this.userMapper.modelToProfile(this.userService.getByUserName(userPrincipal.getUsername()));
+        return ResponseEntity.ok(profile);
     }
 
     @PostMapping("/register")
