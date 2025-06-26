@@ -19,4 +19,6 @@ public class CartItemDto {
 
     private String menuItemName;
 
+    private String imgUrl;
+
 }

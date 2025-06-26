@@ -16,8 +16,9 @@ public class RestaurantService {
         this.restaurantRepository = restaurantRepository;
     }
 
-    public Restaurant createRestaurant(Restaurant restaurant){
-        return this.restaurantRepository.save(restaurant);
+    public String createRestaurant(Restaurant restaurant){
+         this.restaurantRepository.save(restaurant);
+         return "Restaurant Added Successfully";
     }
 
     public Restaurant getByRestaurantId(int restaurantId){
@@ -55,4 +56,11 @@ public class RestaurantService {
         this.restaurantRepository.delete(restaurant);
         return "Deleted Successfully";
     }
+
+    public List<Restaurant> getRestaurantsByUserId(Long userId) {
+        return restaurantRepository.findByOwner_Id(userId);
+    }
+
+
+
 }

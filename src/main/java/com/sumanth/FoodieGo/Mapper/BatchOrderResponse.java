@@ -26,6 +26,8 @@ public class BatchOrderResponse {
             RestaurantOrderDto restaurantOrderDto = new RestaurantOrderDto();
             restaurantOrderDto.setRestaurantId(order.getRestaurant().getId());
             restaurantOrderDto.setOrderTotal(order.getTotalAmount());
+            response.setOrderStatus(order.getOrderStatus());
+            restaurantOrderDto.setOrderStatus(order.getOrderStatus());
 
             List<OrderItemDto> itemDtos = new ArrayList<>();
             for(OrderItem item: order.getOrderItems()){
@@ -36,6 +38,7 @@ public class BatchOrderResponse {
                 itemDto.setName(menuItem.getName());
                 itemDto.setPrice(menuItem.getPrice());
                 itemDto.setQuantity(item.getQuantity());
+                itemDto.setImgUrl(menuItem.getImgUrl());
 
                 itemDtos.add(itemDto);
             }

@@ -49,11 +49,9 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<?> updateUser(@Valid @RequestBody UserDto userDto){
-        User user = this.userMapper.mapToModel(userDto);
-        user.setId(userDto.getId());
+    public ResponseEntity<?> updateUser(@Valid @RequestBody UserProfile userDto){
         try {
-            return ResponseEntity.ok(this.userService.update(user));
+            return ResponseEntity.ok(this.userService.update(userDto));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }

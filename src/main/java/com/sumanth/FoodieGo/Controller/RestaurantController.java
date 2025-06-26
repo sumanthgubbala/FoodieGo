@@ -1,10 +1,15 @@
 package com.sumanth.FoodieGo.Controller;
 
+import com.sumanth.FoodieGo.Dto.RestaurantResponseDto;
 import com.sumanth.FoodieGo.Entity.Restaurant;
+import com.sumanth.FoodieGo.Mapper.RestaurantResponse;
 import com.sumanth.FoodieGo.Service.RestaurantService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -13,19 +18,25 @@ public class RestaurantController {
 
     private final RestaurantService restaurantService;
 
+    @Autowired
+    private RestaurantResponse restaurantResponse;
+
     public RestaurantController(RestaurantService restaurantService) {
         this.restaurantService = restaurantService;
     }
 
     @PostMapping("/add")
-    public ResponseEntity<?> create(@RequestBody Restaurant restaurant){
+    public ResponseEntity<?> create(@RequestBody RestaurantResponseDto dto){
+        Restaurant restaurant = this.restaurantResponse.mapToModel(dto);
         return ResponseEntity.ok(this.restaurantService.createRestaurant(restaurant));
     }
 
     @GetMapping("/{restaurantId}")
     public ResponseEntity<?> getByRestaurantId(@PathVariable int restaurantId){
         try{
-            return ResponseEntity.ok(this.restaurantService.getByRestaurantId(restaurantId));
+            Restaurant restaurant = this.restaurantService.getByRestaurantId(restaurantId);
+            RestaurantResponseDto responseDto = this.restaurantResponse.mapToDto(restaurant);
+            return ResponseEntity.ok(responseDto);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
         }
@@ -33,7 +44,13 @@ public class RestaurantController {
 
     @GetMapping("/all")
     public ResponseEntity<?> getAll(){
-        return ResponseEntity.ok(this.restaurantService.getAllRestaurants());
+        List<Restaurant> restaurants = this.restaurantService.getAllRestaurants();
+        List<RestaurantResponseDto> responseDtos = new ArrayList<>();
+        for (Restaurant restaurant : restaurants){
+            RestaurantResponseDto dto = this.restaurantResponse.mapToDto(restaurant);
+            responseDtos.add(dto);
+        }
+        return ResponseEntity.ok(responseDtos);
     }
 
     @PutMapping("/update")
@@ -62,4 +79,15 @@ public class RestaurantController {
             return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
         }
     }
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<?> getRestaurantsByUserId(@PathVariable Long userId) {
+        List<Restaurant> restaurants = restaurantService.getRestaurantsByUserId(userId);
+        List<RestaurantResponseDto> responseDtos= new ArrayList<>();
+        for(Restaurant restaurant : restaurants){
+            RestaurantResponseDto dto = this.restaurantResponse.mapToDto(restaurant);
+            responseDtos.add(dto);
+        }
+        return ResponseEntity.ok(responseDtos);
+    }
+
 }

@@ -4,9 +4,7 @@ import com.sumanth.FoodieGo.Dto.PlaceBatchOrderDto;
 import com.sumanth.FoodieGo.Entity.*;
 import com.sumanth.FoodieGo.Repository.BatchOrderRepository;
 import com.sumanth.FoodieGo.Repository.CartItemRepository;
-import com.sumanth.FoodieGo.Repository.UserRepository;
 import com.sumanth.FoodieGo.enums.OrderStatus;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -88,5 +86,9 @@ public class BatchOrderService {
         cartItemRepository.deleteAll(cartItems);
 
         return batchOrder;
+    }
+
+    public List<BatchOrder> getAllOrdersByUserId(long userId){
+        return this.batchOrderRepository.findByUser_Id(userId);
     }
 }

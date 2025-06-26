@@ -67,4 +67,15 @@ public class OrderService {
                         ()-> new RuntimeException("Order not found")
                 );
     }
+
+    public List<Order> getByRestaurantId(int restaurantId){
+        return this.orderRepository.findByRestaurantId(restaurantId);
+    }
+
+    public String updateStatus(OrderRequestDto order){
+        Order existing = this.getByOrderId(order.getId());
+        existing.setOrderStatus(order.getOrderStatus());
+        this.orderRepository.save(existing);
+        return "Order Updated";
+    }
 }

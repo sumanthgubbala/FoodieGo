@@ -104,4 +104,19 @@ public class MenuItemController {
             return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
         }
     }
+
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<?> getByRestaurant(@PathVariable int restaurantId){
+        try{
+            List<MenuItem> items = this.menuItemService.getByRestaurantId(restaurantId);
+            List<MenuItemsResponseDto> responseDtos = new ArrayList<>();
+            for(MenuItem item : items){
+                MenuItemsResponseDto dto = this.menuItemsResponse.convertToMenuItemsResponse(item);
+                responseDtos.add(dto);
+            }
+            return ResponseEntity.ok(responseDtos);
+        }catch (Exception e) {
+            return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
+        }
+    }
 }

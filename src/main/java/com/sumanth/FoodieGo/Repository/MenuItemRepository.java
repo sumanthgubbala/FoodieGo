@@ -10,4 +10,6 @@ import java.util.List;
 public interface MenuItemRepository extends JpaRepository<MenuItem ,Integer> {
 
     List<MenuItem> findByCategoryId(int categoryId);
+
+    List<MenuItem> findByRestaurantId(int restaurantId);
 }

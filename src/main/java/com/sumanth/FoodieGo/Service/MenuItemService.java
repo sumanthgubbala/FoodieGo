@@ -57,4 +57,8 @@ public class MenuItemService {
     public List<MenuItem> getByCategoryId(int categoryId){
         return this.menuItemRepository.findByCategoryId(categoryId);
     }
+
+    public List<MenuItem> getByRestaurantId(int restaurantId){
+        return this.menuItemRepository.findByRestaurantId(restaurantId);
+    }
 }

@@ -32,6 +32,8 @@ public class CartItemMapper {
 
         cartItem.setQuantity(cartItemDto.getQuantity());
 
+
+
         return cartItem;
     }
 
@@ -45,6 +47,7 @@ public class CartItemMapper {
         cartItemDto.setMenuItemName(menuItem.getName());
         double price = menuItem.getPrice() * cartItem.getQuantity();
         cartItemDto.setPrice(price);
+        cartItemDto.setImgUrl(cartItem.getMenuItem().getImgUrl());
 
         Restaurant restaurant = menuItem.getRestaurant();
         cartItemDto.setRestaurantName(restaurant.getName());

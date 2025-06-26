@@ -14,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -57,6 +59,46 @@ public class OrderController {
             BatchOrderResponseDto batchOrderResponseDto = this.batchOrderResponse.convertToBatchOrderResponseDto(this.batchOrderService.placeOrder(dto));
             return ResponseEntity.ok(batchOrderResponseDto);
         } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
+        }
+    }
+
+    @GetMapping("/myOrders/{userId}")
+    public ResponseEntity<?> MyOrders(@PathVariable long userId){
+        try{
+            List<BatchOrder> orderList = this.batchOrderService.getAllOrdersByUserId(userId);
+            List<BatchOrderResponseDto> responseList = new ArrayList<>();
+
+            for(BatchOrder order: orderList){
+                BatchOrderResponseDto responseDto = this.batchOrderResponse.convertToBatchOrderResponseDto(order);
+                responseList.add(responseDto);
+            }
+            return ResponseEntity.ok(responseList);
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
+        }
+    }
+
+    @GetMapping("/restaurant/{restaurantId}")
+    public ResponseEntity<?> getByRestaurant(@PathVariable int restaurantId){
+        try{
+            List<Order> orderList = this.orderService.getByRestaurantId(restaurantId);
+            List<OrderResponseDto>responseDtos = new ArrayList<>();
+            for(Order order : orderList){
+                OrderResponseDto dto = this.orderMapper.modelToDto(order);
+                responseDtos.add(dto);
+            }
+            return ResponseEntity.ok(responseDtos);
+        }catch (RuntimeException e) {
+            return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
+        }
+    }
+
+    @PutMapping("/update")
+    public ResponseEntity<?> update(@RequestBody OrderRequestDto dto){
+        try{
+            return ResponseEntity.ok(this.orderService.updateStatus(dto));
+        }catch (RuntimeException e) {
             return ResponseEntity.badRequest().body(Map.of("message",e.getMessage()));
         }
     }

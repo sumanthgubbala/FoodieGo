@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 
 
 @Entity
@@ -41,5 +42,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     @Column(name = "role",nullable = false,length = 20)
     private Role role = Role.CUSTOMER;
+
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL)
+    private List<Restaurant> restaurants;
 
 }

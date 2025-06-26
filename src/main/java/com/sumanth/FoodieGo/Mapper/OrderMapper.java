@@ -16,6 +16,7 @@ public class OrderMapper {
 
         response.setOrderId(order.getId());
         response.setUserId(order.getUser().getId());
+        response.setCustomerName(order.getUser().getUserName());
         response.setRestaurantId(order.getRestaurant().getId());
         response.setDeliveryAddress(order.getDeliveryAddress());
         response.setOrderStatus(order.getOrderStatus());
@@ -28,6 +29,8 @@ public class OrderMapper {
                     dto.setMenuItemId(item.getMenuItem().getId());
                     dto.setQuantity(item.getQuantity());
                     dto.setPrice(item.getPrice());
+                    dto.setName(item.getMenuItem().getName());
+                    dto.setImgUrl(item.getMenuItem().getImgUrl());
                     return dto;
                 }
         ).collect(Collectors.toList());

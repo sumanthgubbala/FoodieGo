@@ -1,5 +1,6 @@
 package com.sumanth.FoodieGo.Service;
 
+import com.sumanth.FoodieGo.Dto.CartItemDto;
 import com.sumanth.FoodieGo.Entity.CartItem;
 import com.sumanth.FoodieGo.Repository.CartItemRepository;
 import org.springframework.stereotype.Service;
@@ -33,9 +34,8 @@ public class CartItemService {
         return this.cartItemRepository.findByUser_Id(userId);
     }
 
-    public CartItem updateCartItem(CartItem cartItem){
+    public CartItem updateCartItem(CartItemDto cartItem){
         CartItem existing = this.getByCartItemId(cartItem.getId());
-        existing.setMenuItem(cartItem.getMenuItem());
         existing.setQuantity(cartItem.getQuantity());
         return this.cartItemRepository.save(existing);
     }

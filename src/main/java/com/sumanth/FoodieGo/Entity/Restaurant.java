@@ -41,4 +41,9 @@ public class Restaurant {
     @Column(name = "status",nullable = false)
     private Status status = Status.OPEN;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id") // This will be the foreign key column in the restaurant table
+    private User owner;
+
+
 }

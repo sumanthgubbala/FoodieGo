@@ -1,6 +1,7 @@
 package com.sumanth.FoodieGo.Service;
 
 import com.sumanth.FoodieGo.Dto.LoginDto;
+import com.sumanth.FoodieGo.Dto.UserProfile;
 import com.sumanth.FoodieGo.Entity.User;
 import com.sumanth.FoodieGo.Repository.UserRepository;
 import com.sumanth.FoodieGo.Security.UserPrincipal;
@@ -29,12 +30,10 @@ public class UserService implements UserDetailsService {
         );
     }
 
-    public User update(User user){
+    public User update(UserProfile user){
         User existing = this.getByUserId(user.getId());
         existing.setEmail(user.getEmail());
-        existing.setFirstName(user.getFirstName());
         existing.setAddress(user.getAddress());
-        existing.setPassword(user.getPassword());
         existing.setPhoneNumber(user.getPhoneNumber());
         existing.setRole(user.getRole());
 
